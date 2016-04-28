@@ -1,8 +1,17 @@
+#zmodload zsh/zprof
+
+timestamp() {
+  #gdate +%s.%N
+  #echo "$@"
+}
+
+timestamp "start"
+
 # shortcut to this dotfiles path is $ZSH
 export ZSH=$HOME/.dotfiles
 
 # your project folder that we can `c [tab]` to
-export PROJECTS=~/Code
+export PROJECTS=~/Developer
 
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
@@ -14,7 +23,7 @@ fi
 
 # all of our zsh files
 typeset -U config_files
-config_files=($ZSH/**/*.zsh)
+config_files=($ZSH/*/*.zsh)
 
 # load the path files
 for file in ${(M)config_files:#*/path.zsh}
@@ -29,8 +38,14 @@ do
 done
 
 # initialize autocomplete here, otherwise functions won't be loaded
-autoload -U compinit
-compinit
+#autoload -U compinit && compinit
+#autoload -Uz compinit && compinit -i
+autoload -Uz compinit
+if [ $(date +'%j') != $(stat -f '%Sm' -t '%j' ~/.zcompdump) ]; then
+  compinit
+else
+  compinit -C
+fi
 
 # load every completion after autocomplete loads
 for file in ${(M)config_files:#*/completion.zsh}
@@ -40,6 +55,41 @@ done
 
 unset config_files
 
+timestamp "rbenv"
+rbenv() {
+  eval "$(command rbenv init -)"
+  rbenv "$@"
+}
+
+export PATH="$HOME/.jenv/bin:$PATH"
+
+timestamp "jenv"
+#eval "$(jenv init -)"
+eval "$(jenv init - --no-rehash)"
+(jenv rehash &) 2> /dev/null
+
+timestamp "nodenv"
+eval "$(nodenv init -)"
+
+timestamp "nvm"
+export NVM_DIR="$HOME/.nvm"
+nvm() {
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+  nvm "$@"
+}
+
+timestamp "outdated completion"
+outdated() {
+  # begin outdated completion
+  . <(command outdated --completion)
+  # end outdated completion
+
+  outdated "$@"
+}
+
+timestamp "Better history"
 # Better history
 # Credits to https://coderwall.com/p/jpj_6q/zsh-better-history-searching-with-arrow-keys
 autoload -U up-line-or-beginning-search
@@ -48,3 +98,12 @@ zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 bindkey "^[[A" up-line-or-beginning-search # Up
 bindkey "^[[B" down-line-or-beginning-search # Down
+
+timestamp "end"
+
+#zprof
+export PATH="/usr/local/opt/protobuf@3.1/bin:$PATH"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"

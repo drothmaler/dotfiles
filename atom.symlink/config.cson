@@ -4,6 +4,8 @@
       beautify_on_save: true
     css:
       beautify_on_save: true
+    general:
+      _analyticsUserId: "d27f54ed-97e2-480c-9715-caef59dda865"
     html:
       beautify_on_save: true
     js:
@@ -11,7 +13,7 @@
     jsx:
       disabled: true
     markdown:
-      beautify_on_save: true
+      commonmark: true
     nginx:
       beautify_on_save: true
     ruby:
@@ -40,10 +42,12 @@
       "metrics"
       "react"
       "linter-rubocop"
-      "tree-view"
+      "language-gfm"
+      "git-diff"
     ]
+    excludeVcsIgnoredPaths: false
     followSymlinks: false
-    hideGitIgnoredFiles: true
+    hideGitIgnoredFiles: false
     ignoredNames: [
       ".bundle"
       ".git"
@@ -52,33 +56,42 @@
       "tmp"
       "vendor"
     ]
+    projectHome: "~/Projects"
     telemetryConsent: "no"
     themes: [
-      "one-light-ui"
-      "one-light-syntax"
+      "one-dark-ui"
+      "atom-dark-syntax"
     ]
   editor:
-    fontFamily: "Menlo"
+    fontFamily: "Consolas, DejaVu Sans Mono, monospace"
+    fontSize: 18
     invisibles: {}
     showIndentGuide: true
-    softWrapAtPreferredLineLength: true
+    showInvisibles: true
+    tabLength: 4
   "go-plus":
+    goPath: "/usr/local/opt/go"
     panel:
       currentHeight: "24.11111111111111vh"
     panelDisplayMode: "closed"
     test: {}
+  linter: {}
   "linter-eslint":
     useGlobalEslint: true
   "linter-rubocop": {}
   "linter-ui-default":
-    panelHeight: 301
+    panelHeight: 69
+    showPanel: true
+  "linter-xmllint": {}
   nuclide:
     "atom-ide-code-format":
       formatOnType: false
     "nuclide-flow": {}
   "prettier-atom":
-    formatOnSaveOptions:
-      enabled: true
+    formatOnSaveOptions: {}
+    useEslint: true
+    useStylelint: true
+  "pretty-json": {}
   "release-notes":
     viewedVersion: "0.89.0"
   "spell-check":
@@ -88,8 +101,17 @@
       "text.git-commit"
       "text.html.basic"
     ]
+    localePaths: [
+      "~/Library/Spelling/"
+    ]
+    locales: [
+      "en-US"
+      "de-DE"
+    ]
   stylefmt:
     formatOnSave: true
+  "tree-view":
+    autoReveal: true
   welcome:
     showOnStartup: false
 ".js.jsx.react.source":
@@ -99,3 +121,15 @@
   editor:
     autoIndent: false
     autoIndentOnPaste: false
+".source.ts":
+  editor:
+    tabLength: 4
+".source.tsx":
+  editor:
+    tabLength: 4
+".text.xml":
+  editor:
+    tabLength: 4
+".text.xml.xsl":
+  editor:
+    tabLength: 4

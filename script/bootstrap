@@ -49,6 +49,21 @@ setup_gitconfig () {
   fi
 }
 
+setup_hgrc () {
+  if ! [ -f mercurial/hgrc.local.symlink ]
+  then
+    info 'setup hgrc'
+
+    user ' - What is your mercurial author name?'
+    read -e hg_authorname
+    user ' - What is your mercurial author email?'
+    read -e hg_authoremail
+
+    sed -e "s/AUTHORNAME/$hg_authorname/g" -e "s/AUTHOREMAIL/$hg_authoremail/g" mercurial/hgrc.local.symlink.example > mercurial/hgrc.local.symlink
+
+    success 'hgrc'
+  fi
+}
 
 link_file () {
   local src=$1 dst=$2
@@ -91,9 +106,7 @@ link_file () {
           * )
             ;;
         esac
-
       fi
-
     fi
 
     overwrite=${overwrite:-$overwrite_all}
@@ -135,9 +148,14 @@ install_dotfiles () {
     dst="$HOME/.$(basename "${src%.*}")"
     link_file "$src" "$dst"
   done
+
+  src="$DOTFILES_ROOT/bash_completion"
+  dst="$HOME/.bash_completion"
+  link_file "$src" "$dst"
 }
 
 setup_gitconfig
+setup_hgrc
 install_dotfiles
 
 # If we're on a Mac, let's install and setup homebrew.

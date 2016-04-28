@@ -1,0 +1,55 @@
+source .bash_profile.local
+
+PS1="[\[\033[32m\]\w]\[\033[0m\]\$(__git_ps1)\n\[\033[1;36m\]\u\[\033[32m\]$ \[\
+\033[0m\]"
+
+export HOMEBREW_HOME="$HOME/.homebrew"
+
+export PATH="$HOMEBREW_HOME/sbin:$PATH"
+export PATH="$HOMEBREW_HOME/bin:$PATH"
+export PATH="/usr/local/bin:$PATH"
+export PATH="/usr/local/sbin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.jenv/bin:$PATH"
+
+export PATH="/Library/TeX/texbin:$PATH"
+export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+
+eval "$(jenv init -)"
+
+# Android
+# export ANDROID_SDK_ROOT=$(brew --prefix android-sdk)
+# export ANDROID_NDK_ROOT=$(brew --prefix android-ndk)
+export ANDROID_SDK_ROOT="~/Library/Android/sdk"
+export ANDROID_NDK_ROOT="~/Library/Android/sdk/ndk-bundle"
+
+export ANDROID_HOME="$ANDROID_SDK_ROOT"
+export NDK_ROOT="$ANDROID_NDK_ROOT"
+
+export MONO_GAC_PREFIX="/usr/local"
+
+export PATH="$ANDROID_SDK_ROOT/tools/":"$ANDROID_SDK_ROOT/platform-tools/":"$PATH"
+
+# export JAVA_HOME=$(/usr/libexec/java_home)
+
+export IDEA_JDK=$(/usr/libexec/java_home)
+export MANPATH=$HOMEBREW_HOME/share/man:$MANPATH
+export GRADLE_HOME=$HOMEBREW_HOME/opt/gradle
+
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+
+if [ -f $HOMEBREW_HOME/etc/bash_completion ]; then
+  . $HOMEBREW_HOME/etc/bash_completion
+fi
+
+function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}
+
+export PATH="$HOME/.yarn/bin:$PATH"
+
+export PATH="$PATH:"/Applications/microchip/xc16/v1.33/bin""
+export PATH="$PATH:"/Applications/microchip/xc32/v1.44/bin""
+export PATH="$PATH:/Applications/microchip/xc8/v1.44/bin"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"

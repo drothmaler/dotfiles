@@ -1,0 +1,18 @@
+%include ~/.hgrc.local
+
+[ui]
+  ignore = ~/.hgignore
+  ssh = ssh -C
+  # merge = internal:merge */
+[pager]
+  pager = LESS='FSRX' less
+  attend = status, help, cat, diff, glog, log, incoming, outgoing, lg, show, lga, blame
+[extensions]
+  color =
+  pager =
+  rebase =
+  purge =
+  shelve =
+  graphlog =
+  progress =
+  hgext.extdiff =
